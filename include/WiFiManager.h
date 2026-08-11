@@ -10,4 +10,4 @@ public:
 private:
    NVSManager& nvs;
    ProvisionManager& provision;
-}
+};

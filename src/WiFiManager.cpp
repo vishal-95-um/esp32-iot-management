@@ -3,9 +3,9 @@
 #include "Provisioning.h"
 #include <WiFi.h>
 
-WiFiManager::WiFiManager(NVSManager& nvs, ProvisionManager& provisioning)
+WiFiManager::WiFiManager(NVSManager& nvs, ProvisionManager& provision)
    :nvs(nvs),
-   provisioning(provisioning)
+   provision(provision)
 {
 }
 
@@ -31,12 +31,12 @@ bool WiFiManager::connect() {
         Serial.println("WiFi Connection Failed");
         Serial.println("Starting the WebServer for local provisioning");
         
-        provisioning.begin();
+        provision.begin();
         return false;
     } else {
         Serial.println("No WiFi Credentials Found");
         Serial.println("Starting the WebServer for local provisioning");
-        provisioning.begin();
+        provision.begin();
         return false;
     }
 }
