@@ -9,7 +9,7 @@ public:
    bool begin();
 
    bool saveWiFiCredentials(const String& ssid, const String& password);
-   bool loadWiFiCredentials(const String& ssid, const String& pasword);
+   bool loadWiFiCredentials(String& ssid, String& pasword);
 
    bool hasWiFiCredentials();
 
@@ -18,4 +18,4 @@ public:
    void end();
 private:
    Preferences prefs;
-}
+};

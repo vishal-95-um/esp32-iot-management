@@ -41,7 +41,7 @@ void ProvisionManager::begin()
     server.on("/", HTTP_GET, [this]()
     {
         handleRoot();
-    });-
+    });
 
     server.on("/save", HTTP_POST, [this]()
     {
