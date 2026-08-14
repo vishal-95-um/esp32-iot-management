@@ -11,6 +11,10 @@
 
 #include "SensorManager.h"
 
+#include "Config.h"
+
+Config config;
+
 NVSManager nvs;
 ProvisionManager provision(nvs);
 WiFiManager wifiManager(nvs, provision);
@@ -86,16 +90,16 @@ void setup() {
 
     sensor.begin();
 
-    mqtt.begin("b1887e3d84b04a238960f0804352d949.s1.eu.hivemq.cloud", 8883);
+    mqtt.begin(config.mqttBroker, config.mqttPort);
 
-    if(!mqtt.connect("ESP32_Client", "vishal_951", "12345678")){
+    if(!mqtt.connect(config.clientId, config.brokerUsername, config.brokerPassword)){
         Serial.println("MQTT Connection Failed");
         return;
     }
 
     mqtt.setCallback(mqttMessageReceived);
 
-    mqtt.subscribe("device/ota");
+    mqtt.subscribe(config.otaTopic);
 
     Serial.println("MQTT ESP32_Client Connected");
     Serial.println("Subscribed to: device/ota");

@@ -1,7 +1,10 @@
 #include "WiFiManager.h"
 #include "NVSManager.h"
 #include "Provisioning.h"
+#include "Config.h"
 #include <WiFi.h>
+
+Config config;
 
 WiFiManager::WiFiManager(NVSManager& nvs, ProvisionManager& provision)
    :nvs(nvs),
@@ -17,7 +20,7 @@ bool WiFiManager::connect() {
 
         int retries = 0;
 
-        while(WiFi.status() != WL_CONNECTED && retries < 20){
+        while(WiFi.status() != WL_CONNECTED && retries < config.wifiRetries){
             delay(500);
             Serial.print(".");
             retries++;

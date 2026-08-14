@@ -1,4 +1,9 @@
 #include "PublisherManager.h"
+#include "Config.h"
+
+Config config;
+
+String topic = config.sensorRootTopic;
 
 PublisherManager::PublisherManager(MQTTManager& mqtt)
    :mqtt(mqtt)
@@ -7,7 +12,6 @@ PublisherManager::PublisherManager(MQTTManager& mqtt)
 }
 
 bool PublisherManager::publish(const char* key, const char* value) {
-    String topic = "device/";
     topic += key;
 
     return mqtt.publish(topic.c_str(), value);
@@ -18,7 +22,6 @@ bool PublisherManager::publish(const char* key, float value) {
 
     snprintf(payload, sizeof(payload), "%.2f", value);
 
-    String topic = "device/";
     topic += key;
 
     return mqtt.publish(topic.c_str(), payload);
@@ -29,7 +32,6 @@ bool PublisherManager::publish(const char* key, int value) {
 
     snprintf(payload, sizeof(payload), "%d", value);
 
-    String topic = "device/";
     topic += key;
 
     return mqtt.publish(topic.c_str(), payload);
