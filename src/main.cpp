@@ -1,121 +1,41 @@
 #include <Arduino.h>
+#include "ESP32IoTSDK.h"
 
-#include "NVSManager.h"
-#include "Provisioning.h"
-#include "WiFiManager.h"
-
-#include "MQTTManager.h"
-#include "PublisherManager.h"
-
-#include "OTAManager.h"
-
-#include "SensorManager.h"
-
-#include "Config.h"
-
-Config config;
-
-NVSManager nvs;
-ProvisionManager provision(nvs);
-WiFiManager wifiManager(nvs, provision);
- 
-MQTTManager mqtt;
-PublisherManager publisher(mqtt);
-
-OTAManager ota;
-
-SensorManager sensor;
-
-SensorData data;
-
-void mqttMessageReceived(const char* topic, const char* payload)
-{
-    Serial.println();
-    Serial.println("===== MQTT MESSAGE =====");
-
-    Serial.print("Topic: ");
-    Serial.println(topic);
-
-    Serial.print("Payload: [");
-    Serial.print(payload);
-    Serial.println("]");
-
-
-    if (strcmp(topic, "device/ota") == 0)
-    {
-        Serial.println("OTA command received");
-
-        String url = String(payload);
-
-        // Remove \r, \n and spaces
-        url.trim();
-
-        Serial.print("OTA URL: [");
-        Serial.print(url);
-        Serial.println("]");
-
-
-        if (url.startsWith("https://"))
-        {
-            Serial.println("Valid HTTPS URL");
-            Serial.println("Starting OTA...");
-
-            ota.update(url.c_str());
-        }
-        else
-        {
-            Serial.println("Invalid OTA URL");
-            Serial.println("OTA cancelled");
-        }
-    }
-}
+ESP32IoTSDK sdk;
 
 void setup() {
     Serial.begin(115200);
     delay(1000);
 
-    if(!nvs.begin()) {
-        Serial.println("NVS Initialization Failed");
+    sdk.config.mqttBroker = "broker.hivemq.com";
+    sdk.config.mqttPort = 8883;
+    sdk.config.brokerUsername = "your_username";
+    sdk.config.brokerPassword = "your_password";
+    sdk.config.clientId = "ESP32_Device";
+    sdk.config.otaTopic = "device/ota";
+    sdk.config.sensorRootTopic = "device/sensor/";
+    sdk.config.sensorPublishInterval = 3000;
+    sdk.config.debugBaudRate = 115200;
+    sdk.config.wifiRetries = 20;
+    sdk.config.apSSID = "ESP32_Config";
+    sdk.config.apPassword = "ESP32_Secure_12345";
+
+    Serial.println("\nESP32 IoT Device Starting...");
+    if (!sdk.begin()) {
+        Serial.println("ERROR: SDK initialization failed!");
         return;
     }
-
-    if(!wifiManager.connect()){
-        Serial.println("WiFi Initialization Failed");
-        return;
-    }
-
-    Serial.println("WiFi Connected");
-    Serial.print("ESP32 IP: ");
-    Serial.println(WiFi.localIP());
-
-    sensor.begin();
-
-    mqtt.begin(config.mqttBroker, config.mqttPort);
-
-    if(!mqtt.connect(config.clientId, config.brokerUsername, config.brokerPassword)){
-        Serial.println("MQTT Connection Failed");
-        return;
-    }
-
-    mqtt.setCallback(mqttMessageReceived);
-
-    mqtt.subscribe(config.otaTopic);
-
-    Serial.println("MQTT ESP32_Client Connected");
-    Serial.println("Subscribed to: device/ota");
-
+    Serial.println("Setup Complete!\n");
 }
 
 void loop() {
-    mqtt.loop();
+    sdk.loop();
 
-    provision.handleClient();
+    SensorData data = sdk.readSensors();
+    sdk.publish("temperature", data.temperature);
+    sdk.publish("humidity", data.humidity);
+    sdk.publish("distance", data.distance);
 
-    data = sensor.read();
+    delay(sdk.config.sensorPublishInterval);
 
-    publisher.publish("temeprature", data.temperature);
-    publisher.publish("humidity", data.humidity);
-    publisher.publish("distance", data.distance);
-
-    delay(10000);
 }
