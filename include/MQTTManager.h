@@ -20,11 +20,12 @@ public:
 
    bool isConnected();
 
-   typedef void (*MQTTCallback)(const char* topic, const char* payload);
-   void setCallback(MQTTCallback callback);
+   typedef void (*MQTTCallback)(void* context, const char* topic, const char* payload);
+   void setCallback(MQTTCallback callback, void* context);
 
 private:
    WiFiClientSecure wifiClient;
    PubSubClient mqttClient;
    MQTTCallback callback;
+   void* callbackContext;
 };
