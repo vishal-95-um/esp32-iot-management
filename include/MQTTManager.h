@@ -27,4 +27,4 @@ private:
    WiFiClientSecure wifiClient;
    PubSubClient mqttClient;
    MQTTCallback callback;
-}
+};

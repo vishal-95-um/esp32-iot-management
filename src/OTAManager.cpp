@@ -49,6 +49,8 @@ bool OTAManager::update(const char* firmwareURL) {
 
     Serial.println("http.begin() SUCCESS");
 
+    http.setFollowRedirects(HTTPC_STRICT_FOLLOW_REDIRECTS);
+
     // 6. send GET request
     Serial.println("Sending the GET Request...");
 

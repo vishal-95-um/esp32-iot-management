@@ -5,4 +5,4 @@
 class OTAManager{
 public:
 bool update(const char* firmwareURL);
-}
+};

@@ -1,4 +1,4 @@
-#pragme once
+#pragma once
 
 #include <Arduino.h>
 #include "MQTTManager.h"
@@ -13,4 +13,4 @@ public:
 
 private:
    MQTTManager& mqtt;
-}
+};

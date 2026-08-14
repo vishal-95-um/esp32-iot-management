@@ -13,7 +13,7 @@ bool PublisherManager::publish(const char* key, const char* value) {
     return mqtt.publish(topic.c_str(), value);
 }
 
-bool PublishManager::publish(const char* key, float value) {
+bool PublisherManager::publish(const char* key, float value) {
     char payload[16];
 
     snprintf(payload, sizeof(payload), "%.2f", value);
@@ -24,7 +24,7 @@ bool PublishManager::publish(const char* key, float value) {
     return mqtt.publish(topic.c_str(), payload);
 }
 
-bool PublishManager::publish(const char* key, int value) {
+bool PublisherManager::publish(const char* key, int value) {
     char payload[16];
 
     snprintf(payload, sizeof(payload), "%d", value);
