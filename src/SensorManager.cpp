@@ -8,13 +8,12 @@ SensorManager::SensorManager() {
 }
 
 bool SensorManager::begin() {
-    Serial.println("Initializing Sensor Manager");
+   
 
     // Sensor Initialization
 
     return true;
 
-    Serial.println("Sensor Manager Initialized");
 
 }
 
