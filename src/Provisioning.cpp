@@ -1,4 +1,7 @@
 #include "Provisioning.h"
+#include "Config.h"
+
+extern Config config;
 
 ProvisionManager::ProvisionManager(NVSManager& nvs)
     : nvs(nvs), server(80)
@@ -11,8 +14,8 @@ void ProvisionManager::begin()
     WiFi.mode(WIFI_AP);
 
     WiFi.softAP(
-        "ESP32_Config",
-        "12345678"
+        config.apSSID,
+        config.apPassword
     );
 
     IPAddress apIP = WiFi.softAPIP();
@@ -23,7 +26,7 @@ void ProvisionManager::begin()
     Serial.println("================================");
 
     Serial.print("AP SSID: ");
-    Serial.println("ESP32_Config");
+    Serial.println(config.apSSID);
 
     Serial.print("AP IP: ");
     Serial.println(apIP);
