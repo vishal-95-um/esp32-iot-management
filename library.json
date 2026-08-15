@@ -1,0 +1,34 @@
+{
+  "name": "ESP32 IoT Management",
+  "version": "0.1.0",
+  "description": "A reusable ESP32 IoT SDK providing WiFi management, WiFi provisioning, NVS storage, MQTT communication, OTA updates, sensor management, and telemetry publishing.",
+  "keywords": [
+    "esp32",
+    "iot",
+    "mqtt",
+    "wifi",
+    "ota",
+    "nvs",
+    "provisioning",
+    "sensors"
+  ],
+  "authors": [
+    {
+      "name": "Vishal"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vishal-95-um/esp32-iot-management.git"
+  },
+  "license": "MIT",
+  "frameworks": [
+    "arduino"
+  ],
+  "platforms": [
+    "espressif32"
+  ],
+  "dependencies": {
+    "knolleary/PubSubClient": "^2.8"
+  }
+}
