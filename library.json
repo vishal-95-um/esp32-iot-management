@@ -1,6 +1,6 @@
 {
   "name": "ESP32 IoT Management",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A reusable ESP32 IoT SDK providing WiFi management, WiFi provisioning, NVS storage, MQTT communication, OTA updates, sensor management, and telemetry publishing.",
   "keywords": [
     "esp32",
