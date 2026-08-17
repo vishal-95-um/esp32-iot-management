@@ -10,41 +10,34 @@
 
 struct Config {
 
-    // ========== MQTT BROKER - CHANGE THESE! ==========
-    // Set your MQTT broker connection details
-    
-    const char* mqttBroker = "broker.hivemq.com";        // Broker address
-    int mqttPort = 8883;                                 // Broker port (1883 unencrypted, 8883 SSL)
-    
-    // YOUR CREDENTIALS - REPLACE WITH YOUR ACTUAL VALUES
-    const char* brokerUsername = "your_username";        // Change this to your MQTT username
-    const char* brokerPassword = "your_password";        // Change this to your MQTT password
-    
-    // Example: If using HiveMQ Cloud
-    // brokerPassword = "AbCdEfG123456";                // Your actual password here
-    
-    const char* clientId = "ESP32_Device_01";            // Unique device ID
+    // MQTT
+    const char* mqttBroker = "test.mosquitto.org";
+    int mqttPort = 1883;
 
-    // ========== MQTT TOPICS - Customize for your app ==========
-    const char* otaTopic = "device/ota";                 // Receives OTA update URLs
-    const char* statusTopic = "device/status";           // Reports device status
-    const char* telemetryTopic = "device/telemetry";     // Sends sensor data
-    String sensorRootTopic = "device/sensor/";           // Base path: device/sensor/temperature, etc.
+    const char* brokerUsername = "";
+    const char* brokerPassword = "";
 
-    // ========== WIFI SETTINGS ==========
-    int wifiRetries = 20;                                // How many times to retry WiFi connection
+    const char* clientId = "ESP32_Device_01";
 
-    // ========== SENSOR SETTINGS ==========
-    int sensorPublishInterval = 30000;                   // Publish every 30 seconds (milliseconds)
-    int sensorReadInterval = 5000;                       // Read sensors every 5 seconds
+    // Topics
+    const char* otaTopic = "device/ota";
+    const char* statusTopic = "device/status";
+    const char* telemetryTopic = "device/telemetry";
+    String sensorRootTopic = "device/sensor/";
 
-    // ========== DEBUG & LOGGING ==========
-    int debugBaudRate = 115200;                          // Serial monitor speed (don't change)
+    // WiFi
+    int wifiRetries = 20;
 
-    // ========== WiFi PROVISIONING MODE ==========
-    // When device starts without saved WiFi, it creates a setup network
-    const char* apSSID = "ESP32_Config";                 // Network name for setup mode
-    const char* apPassword = "ESP32_Secure_12345";       // Password to enter setup mode
+    // Sensors
+    int sensorPublishInterval = 30000;
+    int sensorReadInterval = 5000;
+
+    // Debug
+    int debugBaudRate = 115200;
+
+    // Provisioning
+    const char* apSSID = "ESP32_Config";
+    const char* apPassword = "ESP32_Secure_12345";
 };
 
 // ============================================================================

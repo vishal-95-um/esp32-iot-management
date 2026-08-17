@@ -22,6 +22,10 @@ bool MQTTManager::connect(const char* clientId, const char* username, const char
     if(isConnected()) { 
         return true; 
     } 
+
+    if (username == nullptr || strlen(username) == 0) {
+        return mqttClient.connect(clientId);
+    }
  
     return mqttClient.connect(clientId, username, password); 
 } 
